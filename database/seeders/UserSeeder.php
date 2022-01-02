@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'email'=>"trillzglobal@gmail.com",
             'password'=>Hash::make("michael123"),
             'phone_number'=>"2349032878128",
+            'userid'=>"A12345",
             'status'=>true]);
     }
 }

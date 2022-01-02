@@ -1,6 +1,6 @@
-## ZEEPIT SERVICES
+## SmartClean SERVICES
 
-Zeepit is application centered around getting apprentice for home owners needing services in their home. The application is designed for major cities and allow users to request for apprentice while they make payment online.
+SmartClean is application centered around getting apprentice for home owners needing services in their home. The application is designed for major cities and allow users to request for apprentice while they make payment online.
 
 ## Services
 The service render will be listed on the application.
