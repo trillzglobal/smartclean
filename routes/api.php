@@ -19,8 +19,24 @@ Route::group([
     'prefix' => 'v1.0',
     'middleware' => 'api'
 ], function ($router) {
+    Route::group(['prefix'=>'auth'],
+        function($router){
 
-    Route::post("login", 'User\UserController@login');
+        Route::post("login", 'User\UserController@login');
+        Route::post("register/start", 'User\RegistrationController@createUser');
+
+        Route::post("register/complete", "User\RegistrationController@completeUserCreation");
+        Route::get("password/forgot/{phone_number}", "User\UserController@forgotPassword");
+        Route::post("password/reset", "User\UserController@resetPassword");
+        Route::get("refresh", "User\UserController@refresh");
+        Route::get("logout","User\UserController@logout");
+    });
+
+    Route::post("verify/otp", "User\RegistrationController@verifyRegisterOTP");
+    Route::get("country", "User\RegistrationController@country");
+    Route::get("state/{country_id}", "User\RegistrationController@state");
+    Route::get("city/{state_id}", "User\RegistrationController@city");
+
 
 
 });

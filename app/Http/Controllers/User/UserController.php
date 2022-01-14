@@ -13,7 +13,7 @@ class UserController extends Controller
     //
 
     public function __construct(){
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','forgotPassword','resetPassword']]);
     }
 
 
@@ -77,6 +77,37 @@ class UserController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60
         ]);
+    }
+
+    public function forgotPassword($phone_number){
+        $phone_number = formatPhoneNumber('234',$phone_number);
+        $user =  User::where('phone_number',$phone_number)->first();
+
+        if(!$user)
+            return failed("User detail does not exist", []);
+
+        $otpModel = parent::createOTP($phone_number, config('userconf.token.reset_password'), $user->id);
+        $this->sendOTP($otpModel->otp, $otpModel->phone_number, "password change on");
+
+        return success("OTP Sent successfully to registered phone number", ["otp_id"=>$otpModel->id]);
+    }
+
+    public function resetPassword(Request $request){
+        $data = $this->validate($request->all(), config('validator.change_password'));
+        $otp_reason = config('userconf.token.'.$data['otp_reason']);
+        if(!is_numeric($otp_reason))
+            return failed("OTP Reason is not acceptable", []);
+        $data['otp_reason_id'] = $otp_reason;
+
+        $verified  = parent::verifyOTP($data);
+        if(!$verified)
+            return failed("OTP Verification failed",[]);
+
+        $user =  User::find($verified->user_id);
+        $user->password = $data["new_password"];
+        $user->save();
+
+        return success("Password Changed Successfully", []);
     }
 
 }
