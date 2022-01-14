@@ -11,6 +11,7 @@ class UserDataController extends Controller
     //
     public function getUserDetails(Request $request){
 
+        
     }
 
     public function updateUserDetails(Request $request){

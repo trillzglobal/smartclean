@@ -53,6 +53,7 @@ class RegistrationController extends Controller
             return success("OTP Verification Successful",["otp_id"=>$verified->id]);
         return failed("OTP Verification not Successful",[]);
     }
+    
     public function completeUserCreation(Request $request){
         $data = $this->validate($request->all(), config('validator.register_complete'));
 
