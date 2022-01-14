@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\UserDataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +23,7 @@ Route::group([
     Route::group(['prefix'=>'auth'],
         function($router){
 
-        Route::post("login", 'User\UserController@login');
+        Route::post("login", 'User\UserController@login')->name('login');
         Route::post("register/start", 'User\RegistrationController@createUser');
 
         Route::post("register/complete", "User\RegistrationController@completeUserCreation");
@@ -37,6 +38,8 @@ Route::group([
     Route::get("state/{country_id}", "User\RegistrationController@state");
     Route::get("city/{state_id}", "User\RegistrationController@city");
 
-
-
+    Route::group(['middleware' => 'auth' ], function
+        ($router){
+            Route::post("user/details",[UserDataController::class, 'getUserDetails']);
+        });
 });
