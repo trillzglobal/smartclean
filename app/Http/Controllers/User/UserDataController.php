@@ -13,19 +13,16 @@ class UserDataController extends Controller
 {
 
 
-    //
+    //    
+    /**
+     * getUserDetails
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function getUserDetails(Request $request){
 
-        dd("Hello Drame");
-        // dd(authUser());
-        $user = $request->user();
-        // dd($user);
-        $userid = $user->userid;
-
-
-        $userData = User::where('userid', $userid)->with('user_data')->first();
-
-        // dd($userData);
+        dd(authUser());
 
     }
 
