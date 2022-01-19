@@ -41,6 +41,6 @@ Route::group([
     Route::get("city/{state_id}", "User\RegistrationController@city");
 
     Route::group(['middleware' => 'auth:api'], function ($router) {
-        Route::post("user/details", [UserDataController::class, 'getUserDetails']);
+        Route::get("user/details", [UserDataController::class, 'getUserDetails']);
     });
 });

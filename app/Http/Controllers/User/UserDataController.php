@@ -22,7 +22,14 @@ class UserDataController extends Controller
      */
     public function getUserDetails(Request $request){
 
-        dd(authUser());
+        // dd(authUser());
+        $user = authUser();
+        $userInfo = User::where('id', $user->id)
+                        ->with('user_data.cities.states','wallets','card_details');
+        $userData = UserData::where('user_id', $user->id)->first();
+        dd($userData);
+
+        // goto updateUserDetails();
 
     }
 
