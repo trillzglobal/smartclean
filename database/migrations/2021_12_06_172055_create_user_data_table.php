@@ -14,6 +14,7 @@ class CreateUserDataTable extends Migration
      */
     public function up()
     {
+        
         Schema::create('user_data', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->unique();
@@ -21,9 +22,11 @@ class CreateUserDataTable extends Migration
             $table->string('last_name')->nullable();
             $table->datetime('dob')->nullable();
             $table->longText('address')->nullable();
-            $table->unsignedBigInteger('state_id');
-            $table->unsignedBigInteger('city_id');
-            $table->unsignedBigInteger('country_id');
+            $table->unsignedInteger('state_id');
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
+            $table->unsignedInteger('city_id');
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');            
+            $table->unsignedInteger('country_id');
             $table->longText('avatar')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

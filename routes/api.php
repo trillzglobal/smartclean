@@ -40,7 +40,7 @@ Route::group([
     Route::get("state/{country_id}", "User\RegistrationController@state");
     Route::get("city/{state_id}", "User\RegistrationController@city");
 
-    Route::group(['middleware' => 'auth:api'], function ($router) {
+    Route::group(['middleware' => 'auth:api'], function () {
         Route::get("user/details", [UserDataController::class, 'getUserDetails']);
     });
 });

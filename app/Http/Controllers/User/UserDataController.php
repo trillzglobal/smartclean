@@ -22,15 +22,15 @@ class UserDataController extends Controller
      */
     public function getUserDetails(Request $request){
 
-        // dd(authUser());
         $user = authUser();
-        $userInfo = User::where('id', $user->id)
-                        ->with('user_data.cities.states','wallets','card_details');
-        $userData = UserData::where('user_id', $user->id)->first();
-        dd($userData);
-
-        // goto updateUserDetails();
-
+        if ($user == $request->user()) {
+            $userInfo = User::where('id', $user->id)
+                            ->with('user_data.city.state','wallets','card_details')
+                            ->get();
+            return success("success", $userInfo);
+        }
+        return error("error", "No user found");
+        
     }
 
     public function updateUserDetails(Request $request){

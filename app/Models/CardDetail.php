@@ -9,7 +9,7 @@ class CardDetail extends Model
 {
     use HasFactory;
 
-    protected $attributes = [
-        'api_response' => json_encode(['default', 'null'])
-    ];
+    // protected $attributes = [
+    //     'api_response' => json_encode(['default', 'null'])
+    // ];
 }

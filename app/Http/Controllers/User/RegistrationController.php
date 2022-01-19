@@ -11,6 +11,7 @@ use App\Models\Temporary;
 use App\Models\Token;
 use App\Models\User;
 use App\Models\UserData;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -72,13 +73,21 @@ class RegistrationController extends Controller
 
         if($exist)
             return failed("Please retrace and select a unique username and password", []);
-        //Create User Record
+        
+            //Create User Record
         $user = new User;
         $user->phone_number = $phone_number;
         $user->password = $data["password"];
         $user->email = $email;
         $user->userid = $userid;
         $user->save();
+
+        $userWallet = new Wallet;
+        $userWallet->user_id = $userid;
+        $userWallet->main_balance = 0.00;
+        $userWallet->bonuses = 0.00;
+        $userWallet->referral = 0.00;
+        $userWallet->save();
 
         $data['user_id'] = $user->id;
         //Create UserData Record
