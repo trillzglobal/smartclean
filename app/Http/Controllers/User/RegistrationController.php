@@ -74,7 +74,7 @@ class RegistrationController extends Controller
         if($exist)
             return failed("Please retrace and select a unique username and password", []);
         
-            //Create User Record
+        //Create User Record
         $user = new User;
         $user->phone_number = $phone_number;
         $user->password = $data["password"];
